@@ -2,8 +2,7 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
-// Cambia esta URL cuando tengas la definitiva (workers.dev o dominio propio).
-export const SITE = 'https://portafolio.marcoh11.workers.dev';
+export const SITE = 'https://portafolio.marcohuanca.workers.dev';
 
 export default defineConfig({
   site: SITE,

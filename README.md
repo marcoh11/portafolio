@@ -1,6 +1,6 @@
 # portafolio
 
-Portafolio personal de Marco Huanca. Astro (estático) + Cloudflare Workers, bilingüe ES/EN y con modo día/noche.
+Portafolio personal de Marco Huanca. Astro Cloudflare Workers, bilingüe ES/EN y con modo oscuro.
 
 ## Comandos
 

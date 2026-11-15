@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://portafolio.marcoh11.workers.dev/sitemap-index.xml
+Sitemap: https://portafolio.marcohuanca.workers.dev/sitemap-index.xml
