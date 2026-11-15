@@ -1,16 +1,23 @@
 ---
 import Icon from './Icon.astro';
-import Placeholder from './Placeholder.astro';
+import PhotoFade from './PhotoFade.astro';
 import type { Dict } from '../i18n';
+import profile from '../assets/img/profile.jpg';
+import trekking from '../assets/img/trekking.jpg';
 interface Props { t: Dict }
 const { t } = Astro.props;
+
+const photos = [
+  { src: profile, alt: t.about.photo },
+  { src: trekking, alt: t.about.photo },
+];
 ---
 
 <section id="sobre-mi" class="wrap about" aria-labelledby="about-title">
   <div class="about-inner">
     <div class="about-side">
       <h2 id="about-title" class="section-title">{t.about.title}</h2>
-      <Placeholder label={t.about.photo} class="portrait" />
+      <PhotoFade photos={photos} class="portrait" />
     </div>
     <div class="about-main">
       <p class="serif lead">{t.about.lead}</p>

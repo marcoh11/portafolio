@@ -1,6 +1,7 @@
 ---
 import Placeholder from './Placeholder.astro';
 import type { Dict } from '../i18n';
+import desktop from '../assets/img/desktop.jpg';
 interface Props { t: Dict }
 const { t } = Astro.props;
 ---
@@ -24,7 +25,7 @@ const { t } = Astro.props;
     <div class="what-art">
       <div class="stack-art">
         <div class="back" aria-hidden="true"></div>
-        <Placeholder label={t.what.photo} tone="dark" class="front" />
+        <Placeholder src={desktop} label={t.what.photo} tone="dark" class="front" />
       </div>
     </div>
   </div>

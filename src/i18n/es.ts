@@ -87,7 +87,7 @@ export const es = {
   what: {
     title: 'Lo que hago',
     cta: 'HABLEMOS',
-    photo: 'Foto · setup de escritorio',
+    photo: 'Mi setup de escritorio',
     services: [
       'Arquitectura cloud en AWS',
       'IA Generativa y agentes',
@@ -116,7 +116,7 @@ export const es = {
   },
   about: {
     title: 'Sobre mí',
-    photo: 'Tu foto aquí',
+    photo: 'Foto de Marco Huanca',
     lead: 'Ingeniero de Sistemas con 5+ años construyendo software en producción. Creo que la IA bien aplicada es una ventaja competitiva, y disfruto llevarla del prototipo a algo que la gente usa todos los días.',
     text: 'Hoy soy Software Engineer Senior y referente técnico en Innova Schools: diseño arquitecturas, guío a otros desarrolladores y lidero la adopción de agentes, multi-agentes y MCP en la organización.',
     hobbyTitle: 'Fuera del código',

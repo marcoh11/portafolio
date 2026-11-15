@@ -87,7 +87,7 @@ export const en = {
   what: {
     title: 'What I do',
     cta: 'LET’S TALK',
-    photo: 'Photo · desk setup',
+    photo: 'My desk setup',
     services: [
       'Cloud architecture on AWS',
       'Generative AI and agents',
@@ -116,7 +116,7 @@ export const en = {
   },
   about: {
     title: 'About me',
-    photo: 'Your photo here',
+    photo: 'Photo of Marco Huanca',
     lead: 'Systems Engineer with 5+ years building production software. I believe well-applied AI is a competitive edge, and I enjoy taking it from prototype to something people use every day.',
     text: 'I’m currently a Senior Software Engineer and technical lead at Innova Schools: I design architectures, mentor developers and drive the adoption of agents, multi-agent systems and MCP across the company.',
     hobbyTitle: 'Off the clock',
