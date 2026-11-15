@@ -1,0 +1,15 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "portafolio",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    "html_handling": "auto-trailing-slash",
+    // El Worker solo se ejecuta en "/" para elegir idioma; todo lo demás es estático.
+    "run_worker_first": ["/"]
+  },
+  "observability": { "enabled": true }
+}

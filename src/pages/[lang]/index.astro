@@ -1,0 +1,35 @@
+---
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Hero from '../../components/Hero.astro';
+import Experience from '../../components/Experience.astro';
+import WhatIDo from '../../components/WhatIDo.astro';
+import Stack from '../../components/Stack.astro';
+import Education from '../../components/Education.astro';
+import About from '../../components/About.astro';
+import Footer from '../../components/Footer.astro';
+import CvFab from '../../components/CvFab.astro';
+import { LANGS, useT, type Lang } from '../../i18n';
+
+export function getStaticPaths() {
+  return LANGS.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Lang;
+const t = useT(lang);
+---
+
+<Base lang={lang} title={t.meta.title} description={t.meta.description} ogLocale={t.meta.locale}>
+  <a href="#main" class="skip">{t.nav.skip}</a>
+  <Header lang={lang} t={t} />
+  <main id="main">
+    <Hero t={t} />
+    <Experience t={t} />
+    <WhatIDo t={t} />
+    <Stack t={t} />
+    <Education t={t} />
+    <About t={t} />
+  </main>
+  <Footer t={t} />
+  <CvFab t={t} />
+</Base>

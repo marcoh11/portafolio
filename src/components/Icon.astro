@@ -1,0 +1,56 @@
+---
+type Name = 'arrow' | 'sun' | 'moon' | 'download' | 'plus' | 'gamepad' | 'film' | 'mountain';
+interface Props {
+  name: Name;
+  size?: number;
+  stroke?: number;
+  class?: string;
+}
+const { name, size = 18, stroke = 2, class: cls } = Astro.props;
+---
+
+<svg
+  class={cls}
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width={stroke}
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  focusable="false"
+>
+  {name === 'arrow' && <path d="M5 12h14M13 6l6 6-6 6" />}
+  {name === 'sun' && (
+    <Fragment>
+      <circle cx="12" cy="12" r="4" />
+      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+    </Fragment>
+  )}
+  {name === 'moon' && <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />}
+  {name === 'download' && <path d="M12 4v11M7 10l5 5 5-5M5 20h14" />}
+  {name === 'plus' && <path d="M12 5v14M5 12h14" />}
+  {name === 'gamepad' && (
+    <Fragment>
+      <path d="M6 8h12a4 4 0 0 1 3.9 4.9l-1.1 4.6a2.5 2.5 0 0 1-4.3 1.1L14.6 16H9.4l-1.9 2.6a2.5 2.5 0 0 1-4.3-1.1l-1.1-4.6A4 4 0 0 1 6 8z" />
+      <path d="M8 11v3M6.5 12.5h3" />
+      <circle cx="15.5" cy="11.5" r=".6" fill="currentColor" />
+      <circle cx="17.5" cy="13.5" r=".6" fill="currentColor" />
+    </Fragment>
+  )}
+  {name === 'film' && (
+    <Fragment>
+      <path d="M4 11h16v8a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z" />
+      <path d="M4 11l-.6-3.4a1 1 0 0 1 .8-1.2L17.6 4a1 1 0 0 1 1.2.8L19.3 7 4 11" />
+      <path d="M8.2 5.8l2.6 3.4M13 4.9l2.6 3.4" />
+    </Fragment>
+  )}
+  {name === 'mountain' && (
+    <Fragment>
+      <path d="M3 20l6.5-11 4 6.5L16 12l5 8z" />
+      <path d="M8 11.5l1.5 1.5 1.5-1.5" />
+    </Fragment>
+  )}
+</svg>

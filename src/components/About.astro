@@ -1,0 +1,125 @@
+---
+import Icon from './Icon.astro';
+import Placeholder from './Placeholder.astro';
+import type { Dict } from '../i18n';
+interface Props { t: Dict }
+const { t } = Astro.props;
+---
+
+<section id="sobre-mi" class="wrap about" aria-labelledby="about-title">
+  <div class="about-inner">
+    <div class="about-side">
+      <h2 id="about-title" class="section-title">{t.about.title}</h2>
+      <Placeholder label={t.about.photo} class="portrait" />
+    </div>
+    <div class="about-main">
+      <p class="serif lead">{t.about.lead}</p>
+      <p class="text">{t.about.text}</p>
+
+      <div class="hobby-head">
+        <h3 class="eyebrow">{t.about.hobbyTitle}</h3>
+        <span class="serif hobby-sub">{t.about.hobbySub}</span>
+      </div>
+      <ul class="hobbies">
+        {
+          t.about.hobbies.map((h) => (
+            <li class="hobby">
+              <span class="icon" aria-hidden="true">
+                <Icon name={h.icon} size={22} stroke={1.6} />
+              </span>
+              <div class="hobby-body">
+                <p class="hobby-name">{h.name}</p>
+                <p class="serif hobby-line">{h.line}</p>
+              </div>
+              <span class="tag">{h.tag}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about { padding-bottom: 120px; }
+  .about-inner {
+    border-top: 1px solid var(--line);
+    padding-top: 56px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 48px;
+    justify-content: space-between;
+  }
+  .about-side { flex: 1 1 360px; min-width: 0; }
+  .about-side :global(.portrait) {
+    margin-top: 28px;
+    width: 100%;
+    max-width: 360px;
+    aspect-ratio: 4 / 5;
+  }
+  .about-main { flex: 1 1 560px; min-width: 0; max-width: 720px; }
+  .lead { margin-bottom: 24px; font-size: 26px; line-height: 1.5; }
+  .text { margin-bottom: 56px; font-size: 17px; line-height: 1.7; color: var(--muted); }
+
+  .hobby-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 8px;
+  }
+  .hobby-sub { font-style: italic; font-size: 17px; color: var(--muted); }
+  .hobbies { border-top: 1px solid var(--fg); }
+  .hobby {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 22px 12px;
+    border-bottom: 1px solid var(--line);
+    flex-wrap: wrap;
+    transition: background-color .2s ease;
+  }
+  .hobby:hover { background: var(--tile); }
+  .icon {
+    width: 52px;
+    height: 52px;
+    flex: none;
+    border-radius: 50%;
+    border: 1px solid var(--fg);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .hobby-body { flex: 1 1 260px; min-width: 0; }
+  .hobby-name {
+    margin-bottom: 4px;
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 500;
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+  }
+  .hobby-line { font-size: 17px; line-height: 1.5; color: var(--muted); }
+  .tag {
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 720px) {
+    .about { padding-bottom: 80px; }
+    .about-inner { padding-top: 40px; gap: 32px; }
+    .about-side, .about-main { flex-basis: 100%; }
+    .lead { font-size: 21px; }
+    .text { margin-bottom: 40px; }
+    .hobby { gap: 16px; padding: 18px 4px; }
+    .hobby-body { flex-basis: calc(100% - 68px); }
+    .hobby-name { font-size: 23px; }
+    .tag { margin-left: 68px; }
+  }
+</style>

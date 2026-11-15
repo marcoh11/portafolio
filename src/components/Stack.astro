@@ -1,0 +1,62 @@
+---
+import { PROFILE, type Dict } from '../i18n';
+interface Props { t: Dict }
+const { t } = Astro.props;
+---
+
+<section class="stack" aria-labelledby="stack-title">
+  <div class="wrap stack-head">
+    <h2 id="stack-title" class="stack-title">{t.stack.title}</h2>
+    <p class="serif stack-text">{t.stack.text}</p>
+  </div>
+  <div class="marquee">
+    <div class="track">
+      <ul class="group">
+        {PROFILE.stack.map((tech) => <li>{tech}</li>)}
+      </ul>
+      <ul class="group" aria-hidden="true">
+        {PROFILE.stack.map((tech) => <li>{tech}</li>)}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .stack { padding-block: 72px; border-bottom: 1px solid var(--line); }
+  .stack-head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+  .stack-title { font-family: var(--font-display); font-weight: 400; font-size: 28px; }
+  .stack-text { max-width: 520px; font-size: 18px; line-height: 1.55; color: var(--muted); }
+
+  .marquee {
+    overflow: hidden;
+    mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  }
+  .track { display: flex; width: max-content; animation: marquee 30s linear infinite; }
+  .track:hover { animation-play-state: paused; }
+  .group { display: flex; align-items: center; gap: 72px; padding-right: 72px; }
+  .group li {
+    font-family: var(--font-display);
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    white-space: nowrap;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @media (max-width: 720px) {
+    .group { gap: 44px; padding-right: 44px; }
+    .group li { font-size: 24px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .track { animation: none; }
+    .marquee { overflow-x: auto; }
+  }
+</style>

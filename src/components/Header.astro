@@ -1,0 +1,202 @@
+---
+import Icon from './Icon.astro';
+import { LANGS, type Lang, type Dict } from '../i18n';
+
+interface Props { lang: Lang; t: Dict }
+const { lang, t } = Astro.props;
+---
+
+<header class="wrap header">
+  <a href={`/${lang}/`} class="brand" aria-label="Marco Huanca">
+    <span class="mono" aria-hidden="true">MH</span>
+    <span class="brand-name">marco huanca</span>
+  </a>
+
+  <nav aria-label={t.nav.label} class="nav">
+    <a href="#experiencia" class="nav-link">{t.nav.exp}</a>
+    <a href="#sobre-mi" class="nav-link">{t.nav.about}</a>
+
+    <div role="group" aria-label={t.nav.lang} class="seg">
+      {
+        LANGS.map((l) => (
+          <a
+            href={`/${l}/`}
+            hreflang={l}
+            lang={l}
+            class="seg-btn"
+            aria-current={l === lang ? 'true' : undefined}
+            data-set-lang={l}
+          >
+            {l.toUpperCase()}
+          </a>
+        ))
+      }
+    </div>
+
+    <button
+      type="button"
+      class="theme"
+      data-theme-toggle
+      data-label-light={t.nav.themeToLight}
+      data-label-dark={t.nav.themeToDark}
+      aria-label={t.nav.themeToDark}
+    >
+      <Icon name="moon" class="i-moon" />
+      <Icon name="sun" class="i-sun" />
+    </button>
+
+    <a href="#contacto" class="contact">
+      {t.nav.contact}
+      <Icon name="arrow" size={14} />
+    </a>
+  </nav>
+</header>
+
+<script>
+  const root = document.documentElement;
+  const btn = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+  const mq = window.matchMedia('(prefers-color-scheme: dark)');
+
+  const syncLabel = () => {
+    if (!btn) return;
+    const dark = root.dataset.theme === 'dark';
+    btn.setAttribute('aria-label', (dark ? btn.dataset.labelLight : btn.dataset.labelDark) ?? '');
+    btn.setAttribute('aria-pressed', String(dark));
+  };
+
+  const hasStored = () => {
+    try {
+      return !!localStorage.getItem('theme');
+    } catch {
+      return false;
+    }
+  };
+
+  btn?.addEventListener('click', () => {
+    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    try {
+      localStorage.setItem('theme', next);
+    } catch {}
+    syncLabel();
+  });
+
+  // Mientras la persona no elija, seguimos al sistema en vivo.
+  mq.addEventListener('change', (e) => {
+    if (hasStored()) return;
+    root.dataset.theme = e.matches ? 'dark' : 'light';
+    syncLabel();
+  });
+
+  syncLabel();
+
+  // Recordar el idioma elegido a mano (lo usa el Worker en "/").
+  document.querySelectorAll<HTMLAnchorElement>('[data-set-lang]').forEach((a) => {
+    a.addEventListener('click', () => {
+      document.cookie = `lang=${a.dataset.setLang}; Path=/; Max-Age=31536000; SameSite=Lax`;
+    });
+  });
+</script>
+
+<style>
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding-block: 32px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    white-space: nowrap;
+  }
+  .mono {
+    display: inline-flex;
+    width: 36px;
+    height: 36px;
+    flex: none;
+    border-radius: 50%;
+    background: var(--fg);
+    color: var(--bg);
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    letter-spacing: 0;
+  }
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    font-size: 16px;
+  }
+  .seg {
+    display: inline-flex;
+    padding: 4px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    gap: 2px;
+  }
+  .seg-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 32px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+  }
+  .seg-btn[aria-current='true'] {
+    background: var(--fg);
+    color: var(--bg);
+  }
+  .seg-btn[aria-current='true']:hover { opacity: 1; }
+  .theme {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    background: transparent;
+    transition: border-color .2s ease, transform .3s ease;
+  }
+  .theme:hover { border-color: var(--fg); }
+  .theme:active { transform: rotate(-20deg); }
+  .theme :global(.i-sun) { display: none; }
+  :global([data-theme='dark']) .theme :global(.i-sun) { display: block; }
+  :global([data-theme='dark']) .theme :global(.i-moon) { display: none; }
+  .contact {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border-radius: 999px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 860px) {
+    .nav { gap: 12px; }
+    .nav-link { display: none; }
+  }
+  @media (max-width: 560px) {
+    .header { padding-block: 20px; }
+    .brand-name { display: none; }
+    .contact { padding: 10px 14px; font-size: 15px; }
+    .contact :global(svg) { display: none; }
+  }
+</style>

@@ -1,0 +1,28 @@
+---
+// En producción el Worker (worker/index.ts) responde "/" con un 302 según país/cookie.
+// Esta página es el respaldo para `astro dev` o si el Worker no se ejecutara.
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Marco Huanca</title>
+    <link rel="alternate" hreflang="es" href="/es/" />
+    <link rel="alternate" hreflang="en" href="/en/" />
+    <script is:inline>
+      (function () {
+        var m = document.cookie.match(/(?:^|;\s*)lang=(es|en)/);
+        var l = m ? m[1] : (navigator.language || 'en').toLowerCase().indexOf('es') === 0 ? 'es' : 'en';
+        location.replace('/' + l + '/');
+      })();
+    </script>
+  </head>
+  <body>
+    <noscript>
+      <p><a href="/es/">Español</a> · <a href="/en/">English</a></p>
+    </noscript>
+  </body>
+</html>

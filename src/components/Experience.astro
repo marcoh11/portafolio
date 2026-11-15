@@ -1,0 +1,166 @@
+---
+import Icon from './Icon.astro';
+import type { Dict } from '../i18n';
+interface Props { t: Dict }
+const { t } = Astro.props;
+---
+
+<section id="experiencia" class="wrap exp" aria-labelledby="exp-title">
+  <div class="exp-head">
+    <h2 id="exp-title" class="eyebrow">{t.exp.title}</h2>
+    <p class="serif exp-sub">{t.exp.sub}</p>
+  </div>
+
+  <ol class="jobs">
+    {
+      t.exp.jobs.map((job, i) => (
+        <li>
+          <details class="job" open={i === 0}>
+            <summary class="job-row">
+              <span class="years">{job.years}</span>
+              <span class="company">{job.company}</span>
+              <span class="role">{job.role}</span>
+              <span class="toggle" aria-hidden="true">
+                <Icon name="plus" size={18} stroke={1.6} />
+              </span>
+            </summary>
+            <div class="job-body">
+              <ul class="highlights">
+                {job.highlights.map((h) => <li>{h}</li>)}
+              </ul>
+              <ul class="tags" aria-label="Stack">
+                {job.tech.map((tech) => <li>{tech}</li>)}
+              </ul>
+            </div>
+          </details>
+        </li>
+      ))
+    }
+  </ol>
+</section>
+
+<style>
+  .exp { padding-top: 40px; padding-bottom: 120px; }
+  .exp-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    padding-bottom: 24px;
+  }
+  .exp-sub { font-style: italic; font-size: 17px; color: var(--muted); }
+
+  .jobs { border-top: 1px solid var(--fg); }
+  .jobs > li { border-bottom: 1px solid var(--line); }
+
+  .job-row {
+    display: grid;
+    grid-template-columns: 180px minmax(0, 1fr) minmax(0, 1fr) 44px;
+    align-items: center;
+    gap: 24px;
+    padding: 28px 12px;
+    cursor: pointer;
+    list-style: none;
+    transition: background-color .2s ease;
+  }
+  .job-row::-webkit-details-marker { display: none; }
+  .job-row:hover { background: var(--tile); }
+
+  .years {
+    font-size: 15px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .company {
+    font-family: var(--font-display);
+    font-size: clamp(26px, 3vw, 40px);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+  .role { font-family: var(--font-serif); font-size: 19px; color: var(--muted); }
+
+  .toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    justify-self: end;
+    transition: transform .3s ease, border-color .2s ease;
+  }
+  .job-row:hover .toggle { border-color: var(--fg); }
+  /* Abierto: el mismo estilo, solo gira el + para formar una × */
+  .job[open] .toggle { transform: rotate(45deg); }
+
+  /* Despliegue animado donde el navegador lo soporte. */
+  .job::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition: block-size .35s ease, content-visibility .35s allow-discrete;
+  }
+  .job[open]::details-content { block-size: auto; }
+
+  .job-body {
+    display: grid;
+    grid-template-columns: 180px minmax(0, 1fr) 44px;
+    gap: 16px 24px;
+    padding: 0 12px 32px;
+  }
+  .highlights, .tags { grid-column: 2; }
+  .highlights {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 760px;
+    font-size: 17px;
+    line-height: 1.65;
+  }
+  .highlights li {
+    position: relative;
+    padding-left: 22px;
+  }
+  .highlights li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.8em;
+    width: 10px;
+    height: 1px;
+    background: var(--muted);
+  }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tags li {
+    font-size: 14px;
+    padding: 6px 14px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+  }
+
+  @media (max-width: 860px) {
+    .job-row {
+      grid-template-columns: minmax(0, 1fr) 44px;
+      grid-template-areas:
+        'years toggle'
+        'company toggle'
+        'role toggle';
+      gap: 4px 16px;
+      padding: 22px 4px;
+    }
+    .years { grid-area: years; font-size: 13px; }
+    .company { grid-area: company; }
+    .role { grid-area: role; font-size: 17px; }
+    .toggle { grid-area: toggle; }
+    .job-body { display: flex; flex-direction: column; padding: 0 4px 28px; }
+    .highlights { font-size: 16px; }
+  }
+  @media (max-width: 720px) {
+    .exp { padding-bottom: 80px; }
+  }
+</style>

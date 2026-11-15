@@ -1,0 +1,47 @@
+---
+import Base from '../layouts/Base.astro';
+import { useT } from '../i18n';
+const es = useT('es');
+const en = useT('en');
+---
+
+<Base lang="es" title={`404 — ${es.notFound.title}`} description={es.notFound.text} ogLocale={es.meta.locale} path="/404/" noindex>
+  <main class="nf">
+    <p class="code">404</p>
+    <div class="cols">
+      <div>
+        <h1>{es.notFound.title}</h1>
+        <p class="serif">{es.notFound.text}</p>
+        <a href="/es/" class="pill">{es.notFound.back}</a>
+      </div>
+      <div lang="en">
+        <h2>{en.notFound.title}</h2>
+        <p class="serif">{en.notFound.text}</p>
+        <a href="/en/" class="pill">{en.notFound.back}</a>
+      </div>
+    </div>
+  </main>
+</Base>
+
+<style>
+  .nf {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 40px;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px var(--gutter);
+  }
+  .code {
+    font-family: var(--font-display);
+    font-size: clamp(96px, 18vw, 220px);
+    font-weight: 500;
+    letter-spacing: -0.05em;
+    line-height: 0.9;
+  }
+  .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 40px; }
+  h1, h2 { font-family: var(--font-display); font-weight: 500; font-size: 28px; margin-bottom: 8px; }
+  .serif { color: var(--muted); font-size: 18px; margin-bottom: 20px; }
+</style>

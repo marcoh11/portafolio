@@ -1,0 +1,58 @@
+---
+import type { Dict } from '../i18n';
+interface Props { t: Dict }
+const { t } = Astro.props;
+---
+
+<section class="wrap block" aria-labelledby="edu-title">
+  <div class="block-inner">
+    <div class="block-side">
+      <h2 id="edu-title" class="section-title">{t.edu.title}</h2>
+      <p class="serif sub">{t.edu.sub}</p>
+    </div>
+    <ul class="certs">
+      {
+        t.edu.certs.map((c) => (
+          <li>
+            <div>
+              <p class="serif name">{c.name}</p>
+              <p class="org">{c.org}</p>
+            </div>
+            <span class="year">{c.year}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .block { padding-top: 120px; padding-bottom: 120px; }
+  .block-inner {
+    border-top: 1px solid var(--line);
+    padding-top: 56px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 48px;
+    justify-content: space-between;
+  }
+  .block-side { flex: 1 1 360px; min-width: 0; }
+  .sub { margin-top: 12px; font-size: 20px; }
+  .certs { flex: 1 1 560px; min-width: 0; max-width: 720px; }
+  .certs li {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 24px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .name { font-size: 19px; }
+  .org { margin-top: 2px; font-size: 14px; color: var(--muted); }
+  .year { font-size: 14px; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  @media (max-width: 720px) {
+    .block { padding-top: 80px; padding-bottom: 80px; }
+    .block-inner { padding-top: 40px; gap: 24px; }
+    .block-side, .certs { flex-basis: 100%; }
+  }
+</style>

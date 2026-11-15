@@ -1,0 +1,67 @@
+---
+import '@fontsource-variable/inter/wght.css';
+import '@fontsource-variable/inter-tight/wght.css';
+import '@fontsource/playfair-display/latin-400.css';
+import '@fontsource/playfair-display/latin-400-italic.css';
+import '../styles/global.css';
+import interTightLatin from '@fontsource-variable/inter-tight/files/inter-tight-latin-wght-normal.woff2?url';
+import interLatin from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
+import { LANGS, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description: string;
+  ogLocale: string;
+  /** Ruta sin prefijo de idioma, p. ej. "/" */
+  path?: string;
+  noindex?: boolean;
+}
+
+const { lang, title, description, ogLocale, path = '/', noindex = false } = Astro.props;
+const site = Astro.site ?? new URL(Astro.url.origin);
+const urlFor = (l: Lang) => new URL(`/${l}${path}`, site).href;
+const canonical = urlFor(lang);
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <link rel="canonical" href={canonical} />
+    {LANGS.map((l) => <link rel="alternate" hreflang={l} href={urlFor(l)} />)}
+    <link rel="alternate" hreflang="x-default" href={new URL('/', site).href} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0b0b0b" media="(prefers-color-scheme: dark)" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={ogLocale} />
+    <meta name="twitter:card" content="summary" />
+
+    <link rel="preload" href={interTightLatin} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={interLatin} as="font" type="font/woff2" crossorigin />
+
+    <!-- Tema: se resuelve antes de pintar para evitar parpadeos. -->
+    <script is:inline>
+      (function () {
+        var d = document.documentElement;
+        var stored = null;
+        try { stored = localStorage.getItem('theme'); } catch (e) {}
+        var mq = window.matchMedia('(prefers-color-scheme: dark)');
+        d.dataset.theme = stored === 'light' || stored === 'dark' ? stored : mq.matches ? 'dark' : 'light';
+      })();
+    </script>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
