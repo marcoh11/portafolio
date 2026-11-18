@@ -97,7 +97,7 @@ export const en = {
     ],
   },
   stack: {
-    title: 'My stack',
+    title: 'Technologies',
     text: 'Hexagonal, microservices, DDD and event-driven. The tools I build with every day.',
   },
   edu: {

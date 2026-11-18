@@ -23,7 +23,7 @@ export const PROFILE = {
   cv: '/MarcoHuanca.pdf',
   typewriter: ['Design', 'Build', 'Ship'],
   stack: [
-    'AWS', 'Amazon Bedrock', 'LangGraph', 'LangChain', 'Java 21', 'Python', 'Spring Boot',
-    'Lambda', 'DynamoDB', 'Step Functions', 'Docker', 'Kubernetes', 'Vue.js', 'Angular', 'MCP',
+    'AWS', 'Amazon Bedrock', 'LangGraph', 'LangChain', 'Java 21', 'Python',
+    'Lambda', 'DynamoDB', 'Docker', 'Angular', 'MCP',
   ],
 } as const;
